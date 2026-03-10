@@ -23,9 +23,10 @@ import type { CompanyCategory } from "@/lib/types"
 
 // ─── Derived data helpers ───────────────────────────────────────────────
 
-const CURRENT_MONTH = MONTHLY_DATA[MONTHLY_DATA.length - 1]
-const PREV_MONTH = MONTHLY_DATA[MONTHLY_DATA.length - 2]
-const LAST_6 = MONTHLY_DATA.slice(-6)
+const EMPTY_MONTH = { month: '', receita: 0, gastos_empresa: 0, gastos_pessoais: 0 }
+const CURRENT_MONTH = MONTHLY_DATA[MONTHLY_DATA.length - 1] || EMPTY_MONTH
+const PREV_MONTH = MONTHLY_DATA[MONTHLY_DATA.length - 2] || EMPTY_MONTH
+const LAST_6 = MONTHLY_DATA.length > 0 ? MONTHLY_DATA.slice(-6) : [EMPTY_MONTH]
 
 function pctChange(current: number, previous: number): number {
   if (previous === 0) return 0

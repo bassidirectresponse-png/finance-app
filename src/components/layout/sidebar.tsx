@@ -13,6 +13,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Banknote,
+  TrendingUp,
 } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useUIStore } from "@/lib/store"
@@ -87,12 +89,12 @@ export function Sidebar() {
         )}
       >
         <div className="relative flex-shrink-0">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground text-sm font-bold leading-none">
-              T
-            </span>
+          <div className="relative w-8 h-8 rounded-xl bg-gradient-to-br from-green-500 to-emerald-700 flex items-center justify-center shadow-md overflow-hidden">
+            <Banknote className="text-white w-5 h-5 opacity-90" />
+            <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+              <TrendingUp className="text-green-300 w-6 h-6 rotate-12 opacity-80" />
+            </div>
           </div>
-          <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-primary border-2 border-sidebar-bg" />
         </div>
 
         <AnimatePresence>
