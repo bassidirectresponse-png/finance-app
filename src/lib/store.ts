@@ -139,6 +139,7 @@ export const useCompanyStore = create<CompanyState>()(
     {
       name: 'track-finance:company-expenses',
       storage: createJSONStorage(() => localStorage),
+      version: 1,
     }
   )
 )
@@ -219,6 +220,7 @@ export const usePersonalStore = create<PersonalState>()(
     {
       name: 'track-finance:personal-expenses',
       storage: createJSONStorage(() => localStorage),
+      version: 1,
     }
   )
 )
@@ -326,6 +328,7 @@ export const useTasksStore = create<TasksState>()(
     {
       name: 'track-finance:tasks',
       storage: createJSONStorage(() => localStorage),
+      version: 1,
     }
   )
 )
