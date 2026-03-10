@@ -4,7 +4,14 @@ import * as React from "react"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { Bell, Sun, Moon, CalendarRange } from "lucide-react"
+import { ptBR } from "date-fns/locale"
 import { Button } from "@/components/ui/button"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Calendar } from "@/components/ui/calendar"
 import { useUIStore } from "@/lib/store"
 import { cn } from "@/lib/utils"
 import type { Period } from "@/lib/types"
@@ -44,7 +51,7 @@ const periodPills: PeriodPill[] = [
 export function Header() {
   const pathname = usePathname()
   const { resolvedTheme, setTheme } = useTheme()
-  const { activePeriod, setActivePeriod } = useUIStore()
+  const { activePeriod, setActivePeriod, dateRange, setDateRange } = useUIStore()
   const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
@@ -86,18 +93,40 @@ export function Header() {
           ))}
 
           {/* Custom date range icon pill */}
-          <button
-            onClick={() => setActivePeriod("personalizado")}
-            className={cn(
-              "flex-shrink-0 rounded-full p-1.5 transition-all duration-150 cursor-pointer",
-              activePeriod === "personalizado"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted"
-            )}
-            title="Período personalizado"
-          >
-            <CalendarRange className="w-3.5 h-3.5" />
-          </button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button
+                onClick={() => setActivePeriod("personalizado")}
+                className={cn(
+                  "flex-shrink-0 rounded-full p-1.5 transition-all duration-150 cursor-pointer",
+                  activePeriod === "personalizado"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                )}
+                title="Período personalizado"
+              >
+                <CalendarRange className="w-3.5 h-3.5" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="end">
+              <Calendar
+                mode="range"
+                selected={{
+                  from: dateRange.from,
+                  to: dateRange.to,
+                }}
+                onSelect={(range) => {
+                  if (range) {
+                    setDateRange({ from: range.from, to: range.to })
+                  } else {
+                    setDateRange({ from: undefined, to: undefined })
+                  }
+                }}
+                numberOfMonths={2}
+                locale={ptBR}
+              />
+            </PopoverContent>
+          </Popover>
         </div>
 
         {/* Divider */}
